@@ -11,16 +11,14 @@ import java.util.concurrent.FutureTask;
  * describe:通过 Callable和FutureTask创建线程的demo
  */
 public class HelloThread3 {
-
     static class ThreadDemo implements Callable<String> {
-        // 1. 创建一个类实现 Runnable 接口，并重写该接口的 run() 方法
+        // 1. 创建一个类实现 Callable 接口，并重写该接口的 run() 方法
         @Override
         public String call() {
             System.out.println("Hello Thread");
             return "Callable return value";
         }
     }
-
     public static void main(String[] args) {
         // 2. 创建该 Callable 接口实现类的实例。。
         ThreadDemo threadDemo = new ThreadDemo();
@@ -36,6 +34,5 @@ public class HelloThread3 {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
