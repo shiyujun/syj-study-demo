@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  *
  * @author syj
  * CreateTime 2019/03/21
- * describe: 读写锁测试demo
+ * describe: CountDownLatch测试demo
  */
 public class CountDownLatchDemo {
     public static CountDownLatch countDownLatch = new CountDownLatch(5);
