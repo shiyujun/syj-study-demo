@@ -1,7 +1,5 @@
 package cn.shiyujun.thread.lock.sync;
 
-import cn.shiyujun.thread.hellothread.WaitNotifyThread;
-
 /**
  * d
  *

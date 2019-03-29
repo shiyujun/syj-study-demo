@@ -1,9 +1,6 @@
-package cn.shiyujun.thread.lock;
+package cn.shiyujun.thread.util;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * d
@@ -13,8 +10,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * describe: CountDownLatch测试demo
  */
 public class CountDownLatchDemo {
-    public static CountDownLatch countDownLatch = new CountDownLatch(5);
 
+    public static CountDownLatch countDownLatch = new CountDownLatch(5);
 
     static class ThreadDemo extends Thread {
         @Override
@@ -28,8 +25,6 @@ public class CountDownLatchDemo {
             countDownLatch.countDown();
         }
     }
-
-
 
     public static void main(String[] args) throws InterruptedException {
         for (int i = 0; i < 5; i++) {
