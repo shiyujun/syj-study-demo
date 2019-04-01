@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.function.Consumer;
 /**
  * @author syj
- * CreateTime 2019/01/01
+ * CreateTime 2019/04/02
  * describe:LinkedList源码解析
  */
 public class LinkedList <E> extends AbstractSequentialList<E>

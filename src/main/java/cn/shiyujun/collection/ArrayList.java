@@ -5,7 +5,7 @@ import java.util.*;
 
 /**
  * @author syj
- * CreateTime 2019/01/01
+ * CreateTime 2019/04/01
  * describe:ArrayList源码解析
  */
 public class ArrayList <E> extends AbstractList<E>
@@ -38,7 +38,10 @@ public class ArrayList <E> extends AbstractList<E>
      * @serial
      */
     private int size;
-
+    /**
+     * 数组可分配的最大大小
+     */
+    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
     /**
      * 根据参数构建具有初始大小的构造方法
      */
@@ -128,13 +131,11 @@ public class ArrayList <E> extends AbstractList<E>
 
         // overflow-conscious code
         if (minCapacity - elementData.length > 0)
+            //扩容
             grow(minCapacity);
     }
 
-    /**
-     * 数组可分配的最大大小
-     */
-    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+
 
     /**
      * 扩容
@@ -279,7 +280,7 @@ public class ArrayList <E> extends AbstractList<E>
     }
 
     /**
-     *
+     * 指定索引添加元素
      */
     public void add(int index, E element) {
         //判断索引是否越界
@@ -491,10 +492,10 @@ public class ArrayList <E> extends AbstractList<E>
         int expectedModCount = modCount;
         s.defaultWriteObject();
 
-        // Write out size as capacity for behavioural compatibility with clone()
+        // 首先写数组容量
         s.writeInt(size);
 
-        // Write out all elements in the proper order.
+        // 遍历写数组中的元素
         for (int i=0; i<size; i++) {
             s.writeObject(elementData[i]);
         }
@@ -514,7 +515,7 @@ public class ArrayList <E> extends AbstractList<E>
         // Read in size, and any hidden stuff
         s.defaultReadObject();
 
-        // Read in capacity
+        // 首先读数组容量
         s.readInt(); // ignored
 
         if (size > 0) {
