@@ -7,7 +7,10 @@
 4. [ThreadLocal及InheritableThreadLocal的原理剖析](https://mp.weixin.qq.com/s/5pWY3C5DApGzIylcYLWfGA)
 5. [Fork/Jion框架详解](https://mp.weixin.qq.com/s/3zRogIwJy3Iq6POIn_FAJg)
 6. [生产者/消费者问题](https://mp.weixin.qq.com/s/_uYzuUcOgZxBgf5RegCTJw)
+7. [多线程工具类：CountDownLatch、CyclicBarrier、Semaphore、LockSupport](https://mp.weixin.qq.com/s/Ek9j8eI8kpIl_fbkYM7zbQ)
 
+##### Java集合
+1. [Java集合-ArrayList源码解析-JDK1.8](https://mp.weixin.qq.com/s/YEg1v_A5SuEp05ekUIHD9A)
 >本项目所有內容均來自于公众号《Java学习录》
 <br>
 
