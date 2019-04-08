@@ -28,6 +28,9 @@ public class TreeMap<K,V> extends AbstractMap<K,V>
 
     /**
      * 使用默认比较器
+     * key的类型是什么
+     * 就采用该类型的compareTo方法来比较大小
+     * 例如key为String类型，就会用String类的compareTo方法比对大小
      */
     public TreeMap() {
         comparator = null;
@@ -372,6 +375,7 @@ public class TreeMap<K,V> extends AbstractMap<K,V>
             parent.left = e;
         else
             parent.right = e;
+        // 插入完成，红黑树的结构会被破坏，执行红黑树的恢复操作
         fixAfterInsertion(e);
         //集合大小增加
         size++;
@@ -384,11 +388,12 @@ public class TreeMap<K,V> extends AbstractMap<K,V>
      * 删除节点
      */
     public V remove(Object key) {
+        //查找元素是否存在
         TreeMap.Entry<K,V> p = getEntry(key);
         if (p == null)
             return null;
-
         V oldValue = p.value;
+        //调用具体的删除方法
         deleteEntry(p);
         return oldValue;
     }
@@ -1829,8 +1834,7 @@ public class TreeMap<K,V> extends AbstractMap<K,V>
     private static final boolean BLACK = true;
 
     /**
-     * Node in the Tree.  Doubles as a means to pass key-value pairs back to
-     * user (see Map.Entry).
+     * 红黑树节点
      */
 
     static final class Entry<K,V> implements Map.Entry<K,V> {
@@ -2079,14 +2083,13 @@ public class TreeMap<K,V> extends AbstractMap<K,V>
     }
 
     /**
-     * Delete node p, and then rebalance the tree.
+     * 具体的删除方法
      */
     private void deleteEntry(TreeMap.Entry<K,V> p) {
         modCount++;
         size--;
 
-        // If strictly internal, copy successor's element to p and then make p
-        // point to successor.
+        // 如果待删除节点有两个子节点
         if (p.left != null && p.right != null) {
             TreeMap.Entry<K,V> s = successor(p);
             p.key = s.key;
@@ -2096,7 +2099,7 @@ public class TreeMap<K,V> extends AbstractMap<K,V>
 
         // Start fixup at replacement node, if it exists.
         TreeMap.Entry<K,V> replacement = (p.left != null ? p.left : p.right);
-
+        //待删除节点只有一个孩子
         if (replacement != null) {
             // Link replacement to parent
             replacement.parent = p.parent;
@@ -2113,9 +2116,10 @@ public class TreeMap<K,V> extends AbstractMap<K,V>
             // Fix replacement
             if (p.color == BLACK)
                 fixAfterDeletion(replacement);
+            //如果是根节点
         } else if (p.parent == null) { // return if we are the only node.
             root = null;
-        } else { //  No children. Use self as phantom replacement and unlink.
+        } else { //  没有子节点
             if (p.color == BLACK)
                 fixAfterDeletion(p);
 
