@@ -226,8 +226,9 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
     }
 
     /**
-     * Returns a power of two table size for the given desired capacity.
-     * See Hackers Delight, sec 3.2
+     * 根据初始容量计算计算当前hMap的容量
+     * 检查所传的参数是否为2的幂次方
+     * 如果不为2的幂次方则将其变为比cap大的最小的2的幂次方的值+1
      */
     private static final int tableSizeFor(int c) {
         int n = c - 1;
@@ -310,20 +311,13 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
     /* ---------------- Public operations -------------- */
 
     /**
-     * Creates a new, empty map with the default initial table size (16).
+     * 默认构造
      */
     public ConcurrentHashMap() {
     }
 
     /**
-     * Creates a new, empty map with an initial table size
-     * accommodating the specified number of elements without the need
-     * to dynamically resize.
-     *
-     * @param initialCapacity The implementation performs internal
-     * sizing to accommodate this many elements.
-     * @throws IllegalArgumentException if the initial capacity of
-     * elements is negative
+     * 指定初始容量
      */
     public ConcurrentHashMap(int initialCapacity) {
         if (initialCapacity < 0)
@@ -335,9 +329,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
     }
 
     /**
-     * Creates a new map with the same mappings as the given map.
-     *
-     * @param m the map
+     *添加map
      */
     public ConcurrentHashMap(Map<? extends K, ? extends V> m) {
         this.sizeCtl = DEFAULT_CAPACITY;
@@ -345,41 +337,14 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
     }
 
     /**
-     * Creates a new, empty map with an initial table size based on
-     * the given number of elements ({@code initialCapacity}) and
-     * initial table density ({@code loadFactor}).
-     *
-     * @param initialCapacity the initial capacity. The implementation
-     * performs internal sizing to accommodate this many elements,
-     * given the specified load factor.
-     * @param loadFactor the load factor (table density) for
-     * establishing the initial table size
-     * @throws IllegalArgumentException if the initial capacity of
-     * elements is negative or the load factor is nonpositive
-     *
-     * @since 1.6
+     * 指定初始容量及加载因子
      */
     public ConcurrentHashMap(int initialCapacity, float loadFactor) {
         this(initialCapacity, loadFactor, 1);
     }
 
     /**
-     * Creates a new, empty map with an initial table size based on
-     * the given number of elements ({@code initialCapacity}), table
-     * density ({@code loadFactor}), and number of concurrently
-     * updating threads ({@code concurrencyLevel}).
      *
-     * @param initialCapacity the initial capacity. The implementation
-     * performs internal sizing to accommodate this many elements,
-     * given the specified load factor.
-     * @param loadFactor the load factor (table density) for
-     * establishing the initial table size
-     * @param concurrencyLevel the estimated number of concurrently
-     * updating threads. The implementation may use this value as
-     * a sizing hint.
-     * @throws IllegalArgumentException if the initial capacity is
-     * negative or the load factor or concurrencyLevel are
-     * nonpositive
      */
     public ConcurrentHashMap(int initialCapacity,
                              float loadFactor, int concurrencyLevel) {
@@ -396,9 +361,10 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
     // Original (since JDK1.2) Map methods
 
     /**
-     * {@inheritDoc}
+     * map的长度
      */
     public int size() {
+        //聚合map的长度
         long n = sumCount();
         return ((n < 0L) ? 0 :
                 (n > (long)Integer.MAX_VALUE) ? Integer.MAX_VALUE :
@@ -406,10 +372,10 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
     }
 
     /**
-     * {@inheritDoc}
+     * map是否为空
      */
     public boolean isEmpty() {
-        return sumCount() <= 0L; // ignore transient negative values
+        return sumCount() <= 0L;
     }
 
     /**
@@ -444,27 +410,14 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
     }
 
     /**
-     * Tests if the specified object is a key in this table.
-     *
-     * @param  key possible key
-     * @return {@code true} if and only if the specified object
-     *         is a key in this table, as determined by the
-     *         {@code equals} method; {@code false} otherwise
-     * @throws NullPointerException if the specified key is null
+     * 是否存在某个key
      */
     public boolean containsKey(Object key) {
         return get(key) != null;
     }
 
     /**
-     * Returns {@code true} if this map maps one or more keys to the
-     * specified value. Note: This method may require a full traversal
-     * of the map, and is much slower than method {@code containsKey}.
-     *
-     * @param value value whose presence in this map is to be tested
-     * @return {@code true} if this map maps one or more keys to the
-     *         specified value
-     * @throws NullPointerException if the specified value is null
+     * 是否存在值
      */
     public boolean containsValue(Object value) {
         if (value == null)
@@ -482,23 +435,13 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
     }
 
     /**
-     * Maps the specified key to the specified value in this table.
-     * Neither the key nor the value can be null.
-     *
-     * <p>The value can be retrieved by calling the {@code get} method
-     * with a key that is equal to the original key.
-     *
-     * @param key key with which the specified value is to be associated
-     * @param value value to be associated with the specified key
-     * @return the previous value associated with {@code key}, or
-     *         {@code null} if there was no mapping for {@code key}
-     * @throws NullPointerException if the specified key or value is null
+     * 添加方法
      */
     public V put(K key, V value) {
         return putVal(key, value, false);
     }
 
-    /** Implementation for put and putIfAbsent */
+    /** 具体的添加方法*/
     final V putVal(K key, V value, boolean onlyIfAbsent) {
         if (key == null || value == null) throw new NullPointerException();
         int hash = spread(key.hashCode());
@@ -564,11 +507,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
     }
 
     /**
-     * Copies all of the mappings from the specified map to this one.
-     * These mappings replace any mappings that this map had for any of the
-     * keys currently in the specified map.
-     *
-     * @param m mappings to be stored in this map
+     * 添加集合
      */
     public void putAll(Map<? extends K, ? extends V> m) {
         tryPresize(m.size());
@@ -577,22 +516,14 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
     }
 
     /**
-     * Removes the key (and its corresponding value) from this map.
-     * This method does nothing if the key is not in the map.
-     *
-     * @param  key the key that needs to be removed
-     * @return the previous value associated with {@code key}, or
-     *         {@code null} if there was no mapping for {@code key}
-     * @throws NullPointerException if the specified key is null
+     * 删除方法
      */
     public V remove(Object key) {
         return replaceNode(key, null, null);
     }
 
     /**
-     * Implementation for the four public remove/replace methods:
-     * Replaces node value with v, conditional upon match of cv if
-     * non-null.  If resulting value is null, delete.
+     * 替换
      */
     final V replaceNode(Object key, V value, Object cv) {
         int hash = spread(key.hashCode());
@@ -666,7 +597,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
     }
 
     /**
-     * Removes all of the mappings from this map.
+     * 清空map
      */
     public void clear() {
         long delta = 0L; // negative number of deletions
@@ -786,74 +717,6 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
         return h;
     }
 
-    /**
-     * Returns a string representation of this map.  The string
-     * representation consists of a list of key-value mappings (in no
-     * particular order) enclosed in braces ("{@code {}}").  Adjacent
-     * mappings are separated by the characters {@code ", "} (comma
-     * and space).  Each key-value mapping is rendered as the key
-     * followed by an equals sign ("{@code =}") followed by the
-     * associated value.
-     *
-     * @return a string representation of this map
-     */
-    public String toString() {
-        Node<K,V>[] t;
-        int f = (t = table) == null ? 0 : t.length;
-        Traverser<K,V> it = new Traverser<K,V>(t, f, 0, f);
-        StringBuilder sb = new StringBuilder();
-        sb.append('{');
-        Node<K,V> p;
-        if ((p = it.advance()) != null) {
-            for (;;) {
-                K k = p.key;
-                V v = p.val;
-                sb.append(k == this ? "(this Map)" : k);
-                sb.append('=');
-                sb.append(v == this ? "(this Map)" : v);
-                if ((p = it.advance()) == null)
-                    break;
-                sb.append(',').append(' ');
-            }
-        }
-        return sb.append('}').toString();
-    }
-
-    /**
-     * Compares the specified object with this map for equality.
-     * Returns {@code true} if the given object is a map with the same
-     * mappings as this map.  This operation may return misleading
-     * results if either map is concurrently modified during execution
-     * of this method.
-     *
-     * @param o object to be compared for equality with this map
-     * @return {@code true} if the specified object is equal to this map
-     */
-    public boolean equals(Object o) {
-        if (o != this) {
-            if (!(o instanceof Map))
-                return false;
-            Map<?,?> m = (Map<?,?>) o;
-            Node<K,V>[] t;
-            int f = (t = table) == null ? 0 : t.length;
-            Traverser<K,V> it = new Traverser<K,V>(t, f, 0, f);
-            for (Node<K,V> p; (p = it.advance()) != null; ) {
-                V val = p.val;
-                Object v = m.get(p.key);
-                if (v == null || (v != val && !v.equals(val)))
-                    return false;
-            }
-            for (Map.Entry<?,?> e : m.entrySet()) {
-                Object mk, mv, v;
-                if ((mk = e.getKey()) == null ||
-                        (mv = e.getValue()) == null ||
-                        (v = get(mk)) == null ||
-                        (mv != v && !mv.equals(v)))
-                    return false;
-            }
-        }
-        return true;
-    }
 
     /**
      * Stripped-down version of helper class used in previous version,
@@ -1999,7 +1862,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
         volatile long value;
         CounterCell(long x) { value = x; }
     }
-
+    //聚合map的长度
     final long sumCount() {
         CounterCell[] as = counterCells; CounterCell a;
         long sum = baseCount;

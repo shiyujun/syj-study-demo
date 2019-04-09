@@ -11,6 +11,12 @@
 
 ##### Java集合
 1. [Java集合-ArrayList源码解析-JDK1.8](https://mp.weixin.qq.com/s/YEg1v_A5SuEp05ekUIHD9A)
+2. [Java集合-LinkedList源码解析-JDK1.8](https://mp.weixin.qq.com/s/H_4zBTgvg0zdiGnoUGWDYg)
+3. [Java集合-CopyOnWriteArrayList源码解析-JDK1.8](https://mp.weixin.qq.com/s/H4lh2KS5dbJNX32AMfoEsQ)
+4. [Java集合-Vector源码解析-JDK1.8](https://mp.weixin.qq.com/s/6hWHkVbcOrs7-dags0plpA)
+5. [Java集合-HashMap源码解析-JDK1.8](https://mp.weixin.qq.com/s/lM3A9MrL_XlVw2bVo55Dng)
+6. [Java集合-Hashtable源码解析-JDK1.8](https://mp.weixin.qq.com/s/UZh04yLhsFH6CN0YbObDQw)
+
 >本项目所有內容均來自于公众号《Java学习录》
 <br>
 
