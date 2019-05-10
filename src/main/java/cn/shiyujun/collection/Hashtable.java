@@ -466,8 +466,8 @@ public class Hashtable<K, V> extends Dictionary<K, V>
      * @since 1.2
      */
     public Set<K> keySet() {
-        if (keySet == null)
-            keySet = Collections.synchronizedSet(new KeySet(), this);
+      /*  if (keySet == null)
+            keySet = Collections.synchronizedSet(new KeySet(), this);*/
         return keySet;
     }
 
@@ -510,8 +510,8 @@ public class Hashtable<K, V> extends Dictionary<K, V>
      * @since 1.2
      */
     public Set<Map.Entry<K, V>> entrySet() {
-        if (entrySet == null)
-            entrySet = Collections.synchronizedSet(new Hashtable.EntrySet(), this);
+       /* if (entrySet == null)
+            entrySet = Collections.synchronizedSet(new Hashtable.EntrySet(), this);*/
         return entrySet;
     }
 
@@ -591,9 +591,9 @@ public class Hashtable<K, V> extends Dictionary<K, V>
      * @since 1.2
      */
     public Collection<V> values() {
-        if (values == null)
+    /*    if (values == null)
             values = Collections.synchronizedCollection(new Hashtable.ValueCollection(),
-                    this);
+                    this);*/
         return values;
     }
 
