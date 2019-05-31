@@ -9,6 +9,10 @@
 6. [生产者/消费者问题](https://mp.weixin.qq.com/s/_uYzuUcOgZxBgf5RegCTJw)
 7. [多线程工具类：CountDownLatch、CyclicBarrier、Semaphore、LockSupport](https://mp.weixin.qq.com/s/Ek9j8eI8kpIl_fbkYM7zbQ)
 
+##### JVM
+1. [JVM垃圾收集器详解](https://mp.weixin.qq.com/s/EX2-hBSwrRQyYqc_WQPc_w)
+2. [JVM常用参数配置](https://mp.weixin.qq.com/s/7nqFegi7O_vNhApAJMu0ag)
+
 ##### Java集合
 1. [Java集合-ArrayList源码解析-JDK1.8](https://mp.weixin.qq.com/s/YEg1v_A5SuEp05ekUIHD9A)
 2. [Java集合-LinkedList源码解析-JDK1.8](https://mp.weixin.qq.com/s/H_4zBTgvg0zdiGnoUGWDYg)
