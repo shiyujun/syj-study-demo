@@ -21,6 +21,9 @@
 5. [Java集合-HashMap源码解析-JDK1.8](https://mp.weixin.qq.com/s/lM3A9MrL_XlVw2bVo55Dng)
 6. [Java集合-Hashtable源码解析-JDK1.8](https://mp.weixin.qq.com/s/UZh04yLhsFH6CN0YbObDQw)
 
+##### 算法
+1. [五大基础排序算法](https://mp.weixin.qq.com/s/hpTJ1pkMj3OIT3ZxPxegNg)
+
 >本项目所有內容均來自于公众号《Java学习录》
 <br>
 
